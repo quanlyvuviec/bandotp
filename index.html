@@ -399,6 +399,16 @@
   }
   .user-chip .role { font-weight:800; letter-spacing:.02em; }
   .dateinp { letter-spacing:.4px; }
+  .datewrap { position:relative; display:flex; align-items:stretch; gap:6px; }
+  .datewrap > input.dateinp { flex:1; min-width:0; }
+  .datewrap .datepick-btn {
+    flex:0 0 auto; width:40px; border:1.5px solid #dde3f0; border-radius:8px; background:#f8faff;
+    cursor:pointer; font-size:16px; line-height:1; padding:0;
+  }
+  .datewrap .datepick-btn:hover { background:#eef2ff; border-color:#a5b4fc; }
+  .datewrap input.datepick-native {
+    position:absolute; right:0; bottom:0; width:40px; height:1px; opacity:0; pointer-events:none; border:0; padding:0;
+  }
   .filter-sel {
     padding:9px 10px; border:1.5px solid var(--border); border-radius:9px; font-size:12.5px;
     background:#fff; color:#334155; font-weight:600; cursor:pointer; max-width:220px;
@@ -411,6 +421,7 @@
   tr.row-novu td { background:#f8fafc !important; color:#64748b; font-style:italic; }
   .badge-sl { display:inline-block; background:#fef3c7; color:#92400e; border:1px solid #fcd34d; border-radius:6px; padding:2px 7px; font-size:11px; font-weight:700; }
   .badge-ok { display:inline-block; background:#dcfce7; color:#166534; border:1px solid #86efac; border-radius:6px; padding:2px 7px; font-size:11px; font-weight:700; }
+  .badge-ndb { display:inline-block; background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; border-radius:6px; padding:2px 7px; font-size:11px; font-weight:700; }
   .badge-dvk { display:inline-block; background:#e0e7ff; color:#3730a3; border:1px solid #a5b4fc; border-radius:6px; padding:2px 7px; font-size:11px; font-weight:700; }
   .badge-none { display:inline-block; background:#f1f5f9; color:#64748b; border:1px solid #cbd5e1; border-radius:6px; padding:2px 7px; font-size:11px; font-weight:600; }
   .subj-form-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px 14px; }
@@ -1042,7 +1053,7 @@
         <label class="sub">📌 Thông tin vụ việc</label>
         <div class="subj-form-grid">
           <div class="span2"><label class="sub">Tên vụ việc</label><input type="text" id="nf_tenvuviec" placeholder="VD: Trộm cắp tài sản, Gây rối trật tự công cộng..."></div>
-          <div><label class="sub">Ngày xảy ra vụ việc</label><input type="text" id="nf_ngayxayra" class="dateinp" placeholder="dd/mm/yyyy" inputmode="numeric"></div>
+          <div><label class="sub">Ngày xảy ra vụ việc</label><div class="datewrap"><input type="text" id="nf_ngayxayra" class="dateinp" placeholder="dd/mm/yyyy" inputmode="numeric" maxlength="10" autocomplete="off"><button type="button" class="datepick-btn" data-pick-for="nf_ngayxayra" title="Chọn ngày trên lịch" aria-label="Chọn ngày trên lịch">📅</button><input type="date" class="datepick-native" tabindex="-1" aria-hidden="true"></div></div>
           <div><label class="sub">Hệ *</label>
             <select id="nf_he"><option value="hs">Hình sự</option><option value="ktmt">Kinh tế - Môi trường</option><option value="mt">Ma tuý</option></select>
           </div>
@@ -1098,6 +1109,7 @@
         <option value="sot_lot">⚠️ Chỉ SÓT LỌT</option>
         <option value="phuong_bat">Đã có trong quản lý</option>
         <option value="don_vi_khac">Đơn vị khác bắt</option>
+        <option value="ngoai_dia_ban">Ngoài địa bàn (không tính sót lọt)</option>
         <option value="_novu">Vụ việc chưa có đối tượng</option>
       </select>
       <select id="subjNewFilterHe" class="filter-sel" title="Lọc theo hệ">
@@ -1149,7 +1161,7 @@
           <select id="qe_he"><option value="hs">Hình sự</option><option value="ktmt">Kinh tế - Môi trường</option><option value="mt">Ma tuý</option></select>
         </div>
         <div class="span2"><label class="sub">Tạm trú</label><input type="text" id="qe_tamtru"></div>
-        <div><label class="sub">Diện quản lý</label><input type="text" id="qe_dienquanly"></div>
+        <div><label class="sub">Diện quản lý</label><select id="qe_dienquanly"><option value="">-- Chọn diện quản lý --</option></select></div>
         <div><label class="sub">Khu phố nơi ở *</label><select id="qe_khupho"></select></div>
       </div>
     </div>
@@ -1168,7 +1180,7 @@
       <label class="sub" style="color:#1a3a6e;margin-top:4px;">📌 Vụ việc</label>
       <div class="subj-form-grid">
         <div class="span2"><label class="sub">Tên vụ việc</label><input type="text" id="ne_tenvuviec"></div>
-        <div><label class="sub">Ngày xảy ra vụ việc</label><input type="text" id="ne_ngayxayra" class="dateinp" placeholder="dd/mm/yyyy" inputmode="numeric"></div>
+        <div><label class="sub">Ngày xảy ra vụ việc</label><div class="datewrap"><input type="text" id="ne_ngayxayra" class="dateinp" placeholder="dd/mm/yyyy" inputmode="numeric" maxlength="10" autocomplete="off"><button type="button" class="datepick-btn" data-pick-for="ne_ngayxayra" title="Chọn ngày trên lịch" aria-label="Chọn ngày trên lịch">📅</button><input type="date" class="datepick-native" tabindex="-1" aria-hidden="true"></div></div>
         <div><label class="sub">Hệ *</label>
           <select id="ne_he"><option value="hs">Hình sự</option><option value="ktmt">Kinh tế - Môi trường</option><option value="mt">Ma tuý</option></select>
         </div>
@@ -1669,7 +1681,7 @@ function countDangQuanLy(kp, he) { return loadSubjQL().filter(s => s.khuPho === 
 // KHÔNG phải theo khu phố nơi xảy ra vụ việc (khuPho). Lý do: 1 vụ việc có thể xảy ra ở nơi không
 // thuộc phường Tân Bình (khuPho để trống, không tính vụ đó vào khu phố nào), nhưng đối tượng gây án
 // vẫn có thể có hộ khẩu/nơi ở tại một khu phố cụ thể của phường -> khu phố đó vẫn phải được +1 đối tượng.
-function countSotLot(kp, he) { return demDoiTuong(loadSubjNew().filter(s => s.khuPhoNoiO === kp && s.he === he && s.xuLy === 'sot_lot')); }
+function countSotLot(kp, he) { return demDoiTuong(loadSubjNew().filter(s => s.khuPhoNoiO === kp && s.he === he && xuLyOf(s) === 'sot_lot')); }
 function countDonViKhac(kp, he) { return demDoiTuong(loadSubjNew().filter(s => s.khuPhoNoiO === kp && s.he === he && s.xuLy === 'don_vi_khac')); }
 // Tự nhận diện số khu phố (1-32) từ 1 chuỗi địa chỉ tự do, ví dụ "12 Bàu Cát, khu phố 1, P.Tân Bình"
 // -> 1. Không phân biệt hoa/thường, có dấu/không dấu, có hoặc không có khoảng trắng/dấu chấm.
@@ -1751,6 +1763,29 @@ function timTrungDoiTuongQL(hoTen, khuPhoNoiO, ngaySinh, cccd) {
   if (mauThuan.length === cands.length) return null;   // tất cả đều khác năm sinh -> khác người
   return cands.find(s => soSanhNgaySinh(ngaySinh, s.ngaySinh) === null) || cands[0];
 }
+// Tên đơn vị bắt của 1 dòng: rỗng = CAP (Công an phường). Tương thích dữ liệu cũ (xuLy = don_vi_khac).
+function donViBatOf(s) {
+  const d = String((s && s.donViBat) || '').trim();
+  if (d) return d;
+  return (s && s.xuLy === 'don_vi_khac') ? 'Đơn vị khác' : '';
+}
+// PHÂN LOẠI TRẠNG THÁI 1 ĐỐI TƯỢNG MỚI BẮT — AI BẮT CŨNG ĐƯỢC:
+//   - Có trong danh sách quản lý + CAP bắt                                   -> 'phuong_bat'
+//   - Có trong danh sách quản lý + đơn vị khác bắt                           -> 'don_vi_khac'
+//   - KHÔNG có trong danh sách quản lý, nơi ở NGOÀI ĐỊA BÀN phường (không có khu phố ở) -> 'ngoai_dia_ban'
+//     (đối tượng không thuộc địa bàn phường nên KHÔNG tính là sót lọt)
+//   - KHÔNG có trong danh sách quản lý, nơi ở thuộc 1 khu phố của phường (CAP hay đơn vị khác bắt) -> 'sot_lot'
+function phanLoaiXuLy(hoTen, khuPhoNoiO, ngaySinh, cccd, donViBat) {
+  if (timTrungDoiTuongQL(hoTen, khuPhoNoiO, ngaySinh, cccd)) return String(donViBat || '').trim() ? 'don_vi_khac' : 'phuong_bat';
+  return khuPhoNoiO ? 'sot_lot' : 'ngoai_dia_ban';
+}
+// Trạng thái hiệu lực để HIỂN THỊ / LỌC / XUẤT: dữ liệu cũ lưu 'sot_lot' nhưng không có khu phố ở
+// thì cũng coi là 'ngoai_dia_ban' (không cần ghi lại dữ liệu, kể cả tài khoản chỉ xem).
+function xuLyOf(s) {
+  if (!s || !s.hoTen) return '';
+  if (s.xuLy === 'sot_lot' && !s.khuPhoNoiO) return 'ngoai_dia_ban';
+  return s.xuLy || '';
+}
 // Tính lại trạng thái Sót lọt cho TOÀN BỘ danh sách đối tượng mới (dùng khi danh sách quản lý
 // vừa thay đổi: nhập Excel mới, thêm/sửa/xoá đối tượng đang quản lý).
 function recomputeSotLotAll() {
@@ -1758,8 +1793,7 @@ function recomputeSotLotAll() {
   let changed = 0;
   list.forEach(s => {
     if (!s.hoTen) { if (s.xuLy) { s.xuLy = ''; changed++; } return; }   // dòng chỉ có vụ việc, chưa có đối tượng
-    if (s.xuLy === 'don_vi_khac') return;                                // đơn vị khác bắt: giữ nguyên
-    const moi = timTrungDoiTuongQL(s.hoTen, s.khuPhoNoiO, s.ngaySinh, s.cccd) ? 'phuong_bat' : 'sot_lot';
+    const moi = phanLoaiXuLy(s.hoTen, s.khuPhoNoiO, s.ngaySinh, s.cccd, donViBatOf(s));   // ai bắt cũng chấm lại
     if (s.xuLy !== moi) { s.xuLy = moi; changed++; }
   });
   if (changed) saveSubjNew(list);
@@ -3282,6 +3316,54 @@ document.getElementById('subjQLSearch').addEventListener('input', renderSubjQLTa
 
 /* ---- Thêm mới / Sửa 1 đối tượng trong Danh sách đang quản lý (dùng chung 1 modal) ---- */
 let qlEditingId = null; // null khi đang ở chế độ THÊM MỚI, có giá trị khi đang SỬA
+const DIEN_QUAN_LY_LIST = [
+  'Sử dụng trái phép chất ma tuý',
+  'Nghiện ma tuý',
+  'Quản lý sau cai',
+  'Sưu tra',
+  'Đối tượng nghi vấn về ma tuý',
+];
+// 1 người có thể thuộc đồng thời Sưu tra + Quản lý sau cai (lưu dạng chuỗi nối bằng ", ").
+const DIEN_SUU_TRA_SAU_CAI = 'Sưu tra, Quản lý sau cai';
+const DIEN_QL_ORDER = ['Sử dụng trái phép chất ma tuý', 'Nghiện ma tuý', 'Sưu tra', 'Quản lý sau cai', 'Đối tượng nghi vấn về ma tuý'];
+/* Tự hiểu "Diện quản lý" từ nội dung ô Excel:
+   - Để trống                                   -> Đối tượng nghi vấn về ma tuý
+   - Có chữ methadone (methadon/metadon/moethadone) -> Nghiện ma tuý
+   - Có chữ "sưu tra"                           -> Sưu tra
+   - Có số Quyết định (QĐ)                      -> Quản lý sau cai
+   - Vừa sưu tra vừa có số QĐ                   -> Sưu tra + Quản lý sau cai
+   Ngoài ra vẫn nhận đúng tên các diện trong danh sách (Sử dụng trái phép..., Nghiện, Sau cai, Nghi vấn).
+   Trả về { value, unknown }: unknown = true nếu có chữ nhưng không nhận diện được (giữ nguyên chữ gốc). */
+function suyDienQuanLyTuExcel(raw) {
+  const txt = String(raw || '').trim();
+  if (!txt) return { value: 'Đối tượng nghi vấn về ma tuý', unknown: false };
+  const n = normKey(txt).replace(/đ/g, 'd');
+  const found = new Set();
+  if (/m(o?e)?t(h)?adon|methado/.test(n) || /nghien/.test(n)) found.add('Nghiện ma tuý');
+  if (/suu\s*tra/.test(n)) found.add('Sưu tra');
+  if (/su dung trai phep/.test(n)) found.add('Sử dụng trái phép chất ma tuý');
+  if (/nghi van/.test(n)) found.add('Đối tượng nghi vấn về ma tuý');
+  const coSoQD = /(^|[^a-z])qd([^a-z]|$)/.test(n)            // QĐ 12, 12/QĐ-CAP, QĐ-123...
+    || /quyet\s*dinh/.test(n)                                 // "Quyết định số ..."
+    || /\d+\s*\/\s*[a-z]/.test(n)                              // 123/CAP, 45/TB... (số hiệu văn bản)
+    || (/^(so\s*)?[\d\s\/\-\.]+$/.test(n) && !/^\d{1,4}[\/\-.]\d{1,2}[\/\-.]\d{1,4}$/.test(n));   // ô chỉ ghi số quyết định (loại trừ ô chỉ là 1 ngày tháng)
+  if (/sau\s*cai/.test(n) || coSoQD) found.add('Quản lý sau cai');
+  if (!found.size) return { value: txt, unknown: true };
+  return { value: DIEN_QL_ORDER.filter(v => found.has(v)).join(', '), unknown: false };
+}
+// Nạp danh sách Diện quản lý; extra = giá trị cũ (nhập tay/Excel) chưa nằm trong danh sách -> giữ lại để không mất dữ liệu.
+function populateDienQuanLy(extra) {
+  const sel = document.getElementById('qe_dienquanly');
+  sel.innerHTML = '';
+  sel.appendChild(new Option('-- Chọn diện quản lý --', ''));
+  DIEN_QUAN_LY_LIST.forEach(v => sel.appendChild(new Option(v, v)));
+  sel.appendChild(new Option(DIEN_SUU_TRA_SAU_CAI, DIEN_SUU_TRA_SAU_CAI));
+  const e = String(extra || '').trim();
+  if (e && !DIEN_QUAN_LY_LIST.includes(e) && e !== DIEN_SUU_TRA_SAU_CAI) {
+    const conhop = e.split(',').every(p => DIEN_QUAN_LY_LIST.includes(p.trim()));
+    sel.appendChild(new Option(conhop ? e : e + ' (giá trị cũ)', e));
+  }
+}
 function populateQLEditSelects() {
   const khuPho = document.getElementById('qe_khupho');
   khuPho.innerHTML = '';
@@ -3298,6 +3380,7 @@ function openQLEdit(id) {
   document.getElementById('qe_cccd').value = rec.cccd || '';
   document.getElementById('qe_he').value = rec.he || 'hs';
   document.getElementById('qe_tamtru').value = rec.tamTru || '';
+  populateDienQuanLy(rec.dienQuanLy);
   document.getElementById('qe_dienquanly').value = rec.dienQuanLy || '';
   document.getElementById('qe_khupho').value = String(rec.khuPho || 1);
   document.getElementById('qlEditPop').classList.add('show');
@@ -3306,7 +3389,9 @@ function openQLAdd() {
   populateQLEditSelects();
   qlEditingId = null;
   document.getElementById('qlEditTitle').textContent = '➕ Thêm đối tượng mới (Danh sách đang quản lý)';
-  ['qe_hoten', 'qe_ngaysinh', 'qe_cccd', 'qe_tamtru', 'qe_dienquanly'].forEach(id => document.getElementById(id).value = '');
+  ['qe_hoten', 'qe_ngaysinh', 'qe_cccd', 'qe_tamtru'].forEach(id => document.getElementById(id).value = '');
+  populateDienQuanLy('');
+  document.getElementById('qe_dienquanly').value = '';
   document.getElementById('qe_he').value = 'hs';
   document.getElementById('qe_khupho').value = '1';
   document.getElementById('qlEditPop').classList.add('show');
@@ -3359,7 +3444,9 @@ function updateNeDedupNote() {
   const match = timTrungDoiTuongQL(hoTen, khuPhoNoiO, ngaySinh, cccd);
   note.textContent = match
     ? '✓ Trùng với đối tượng đang quản lý (khu phố ' + displayNameNew(match.khuPho) + ') → KHÔNG tính là sót lọt'
-    : '⚠️ Không khớp với danh sách đang quản lý → tính là Sót lọt (nếu đơn vị bắt = CAP)';
+    : (khuPhoNoiO
+      ? '⚠️ Không khớp với danh sách đang quản lý → tính là Sót lọt (nếu đơn vị bắt = CAP, Đơn vị khác)'
+      : 'ℹ️ Đối tượng ở NGOÀI ĐỊA BÀN phường (chưa chọn Khu phố ở) → KHÔNG tính là sót lọt. Nếu thực tế ở phường Tân Bình, hãy chọn Khu phố ở.');
 }
 ['ne_hoten', 'ne_cccd'].forEach(id => document.getElementById(id).addEventListener('blur', updateNeDedupNote));
 document.getElementById('ne_ngaysinh').addEventListener('blur', updateNeDedupNote);
@@ -3376,6 +3463,29 @@ document.getElementById('ne_noio').addEventListener('blur', () => {
 document.querySelectorAll('input[name="ne_donvi"]').forEach(r => r.addEventListener('change', () => {
   document.getElementById('ne_donvibat').style.display = document.querySelector('input[name="ne_donvi"]:checked').value === 'khac' ? 'block' : 'none';
 }));
+/* ---- Chọn ngày trên lịch cho ô "Ngày xảy ra vụ việc" — luôn hiển thị dd/mm/yyyy ---- */
+document.querySelectorAll('.datepick-btn').forEach(btn => {
+  const txt = document.getElementById(btn.getAttribute('data-pick-for'));
+  const nat = btn.parentElement.querySelector('.datepick-native');
+  btn.addEventListener('click', () => {
+    nat.value = ngaySinhKey(txt.value) || '';          // mở lịch tại đúng ngày đang nhập
+    try { if (nat.showPicker) { nat.showPicker(); return; } } catch (e) {}
+    nat.style.pointerEvents = 'auto'; nat.focus(); nat.click();
+  });
+  nat.addEventListener('change', () => {
+    if (nat.value) { txt.value = fmtNgay(nat.value); txt.dispatchEvent(new Event('input', { bubbles: true })); }
+  });
+  // Gõ tay: tự chèn dấu "/" -> 12032024 thành 12/03/2024
+  txt.addEventListener('input', e => {
+    if (e.inputType && e.inputType.startsWith('delete')) return;
+    if (/[-.]/.test(txt.value)) return;                 // người dùng gõ dạng yyyy-mm-dd / dd-mm-yyyy: để nguyên
+    const d = txt.value.replace(/[^0-9]/g, '').slice(0, 8);
+    let o = d;
+    if (d.length > 4) o = d.slice(0, 2) + '/' + d.slice(2, 4) + '/' + d.slice(4);
+    else if (d.length > 2) o = d.slice(0, 2) + '/' + d.slice(2);
+    if (o !== txt.value) txt.value = o;
+  });
+});
 function openNewRowEdit(id) {
   const rec = loadSubjNew().find(s => s._id === id);
   if (!rec) return;
@@ -3391,9 +3501,9 @@ function openNewRowEdit(id) {
   document.getElementById('ne_cccd').value = rec.cccd || '';
   document.getElementById('ne_noio').value = rec.noiO || '';
   document.getElementById('ne_khuphonoio').value = rec.khuPhoNoiO ? String(rec.khuPhoNoiO) : '';
-  const isKhac = rec.xuLy === 'don_vi_khac';
+  const isKhac = !!donViBatOf(rec);
   document.querySelector('input[name="ne_donvi"][value="' + (isKhac ? 'khac' : 'cap') + '"]').checked = true;
-  document.getElementById('ne_donvibat').value = rec.donViBat || '';
+  document.getElementById('ne_donvibat').value = donViBatOf(rec);
   document.getElementById('ne_donvibat').style.display = isKhac ? 'block' : 'none';
   updateNeDedupNote();
   document.getElementById('newEditPop').classList.add('show');
@@ -3415,7 +3525,7 @@ document.getElementById('neSave').addEventListener('click', () => {
   const khuPhoVal = document.getElementById('ne_khupho').value;
   const khuPho = khuPhoVal ? parseInt(khuPhoVal, 10) : null;
   const he = document.getElementById('ne_he').value;
-  const xuLy = donVi === 'khac' ? 'don_vi_khac' : (timTrungDoiTuongQL(hoTen, khuPhoNoiO, ngaySinh, cccd) ? 'phuong_bat' : 'sot_lot');
+  const xuLy = phanLoaiXuLy(hoTen, khuPhoNoiO, ngaySinh, cccd, donViBat);
   const list = loadSubjNew();
   const old = list.find(s => s._id === newEditingId);
   const updated = {
@@ -3456,6 +3566,7 @@ document.getElementById('subjQLFile').addEventListener('change', async function 
     const ws = wb.worksheets[0];
     const heMap = { 'hinh su': 'hs', 'hs': 'hs', 'kinh te - moi truong': 'ktmt', 'kt-mt': 'ktmt', 'ktmt': 'ktmt', 'ma tuy': 'mt', 'mt': 'mt' };
     const out = [];
+    let dienKhongNhanDien = 0;
     let headerRow = -1;
     ws.eachRow((row, rowNumber) => {
       const c1 = normKey(row.getCell(1).value || '');
@@ -3467,7 +3578,9 @@ document.getElementById('subjQLFile').addEventListener('change', async function 
       const ngaySinh = nsRaw instanceof Date ? nsRaw.toISOString().slice(0, 10) : parseNgayInput(String(nsRaw || '').trim());
       const cccd = String(row.getCell(4).value || '').trim();
       const tamTru = String(row.getCell(5).value || '').trim();
-      const dienQuanLy = String(row.getCell(6).value || '').trim();
+      const dq = suyDienQuanLyTuExcel(cellText(row.getCell(6)));
+      const dienQuanLy = dq.value;
+      if (dq.unknown) dienKhongNhanDien++;
       const heRaw = normKey(row.getCell(7).value || '');
       const he = heMap[heRaw] || (heRaw.includes('hinh') ? 'hs' : heRaw.includes('kinh') ? 'ktmt' : heRaw.includes('tuy') ? 'mt' : 'hs');
       const khuPho = parseInt(String(row.getCell(8).value || '').replace(/[^0-9]/g, ''), 10) || null;
@@ -3479,7 +3592,8 @@ document.getElementById('subjQLFile').addEventListener('change', async function 
     // Danh sách quản lý vừa đổi -> phải chấm lại Sót lọt cho toàn bộ đối tượng mới bắt.
     const dm = recomputeSotLotAll();
     renderSubjectsPage(); if (!adjustMode) refreshDots(); refreshStatsIfOpen();
-    showToast('✅ Đã nhập ' + out.length + ' đối tượng vào danh sách quản lý' + (dm ? ' — đã cập nhật lại ' + dm + ' trạng thái sót lọt' : ''));
+    showToast('✅ Đã nhập ' + out.length + ' đối tượng vào danh sách quản lý' + (dm ? ' — đã cập nhật lại ' + dm + ' trạng thái sót lọt' : '')
+      + (dienKhongNhanDien ? ' — ⚠️ ' + dienKhongNhanDien + ' dòng có Diện quản lý không nhận diện được (giữ nguyên chữ gốc)' : ''));
   } catch (err) {
     console.error(err);
     showToast('❌ Lỗi đọc file Excel: ' + err.message);
@@ -3490,7 +3604,10 @@ document.getElementById('btnSubjQLTemplate').addEventListener('click', async () 
   const wb = new ExcelJS.Workbook();
   const ws = wb.addWorksheet('DanhSach');
   ws.columns = SUBJ_QL_COLUMNS;
-  ws.addRow({ stt: 1, hoTen: 'Nguyễn Văn A', ngaySinh: '01/01/1990', cccd: '079123456789', tamTru: '', dienQuanLy: 'Nghiện ma tuý', he: 'Ma tuý', khuPho: 1 });
+  ws.addRow({ stt: 1, hoTen: 'Nguyễn Văn A', ngaySinh: '01/01/1990', cccd: '079123456789', tamTru: '', dienQuanLy: 'Methadone', he: 'Ma tuý', khuPho: 1 });
+  ws.addRow({ stt: 2, hoTen: 'Trần Văn B', ngaySinh: '02/02/1992', cccd: '', tamTru: '', dienQuanLy: '', he: 'Ma tuý', khuPho: 2 });
+  ws.addRow({ stt: 3, hoTen: 'Lê Văn C', ngaySinh: '03/03/1985', cccd: '', tamTru: '', dienQuanLy: 'QĐ số 123/QĐ-CAP', he: 'Ma tuý', khuPho: 3 });
+  ws.addRow({ stt: 4, hoTen: 'Phạm Văn D', ngaySinh: '04/04/1988', cccd: '', tamTru: '', dienQuanLy: 'Sưu tra; QĐ số 45/QĐ-CAP', he: 'Ma tuý', khuPho: 4 });
   const buf = await wb.xlsx.writeBuffer();
   const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Mau_DanhSachDoiTuongQuanLy.xlsx'; a.click();
@@ -3530,7 +3647,7 @@ const SUBJ_NEW_COLUMNS = [
   { header: 'Đơn vị bắt (để trống/CAP = Công an phường; hoặc ghi tên đơn vị khác)', key: 'donViBat', width: 34 },
   { header: 'Trạng thái (tự tính, chỉ để xem)', key: 'trangThai', width: 20 },
 ];
-const XULY_LABEL_VN = { phuong_bat: 'Đã có trong quản lý', sot_lot: 'Sót lọt', don_vi_khac: 'Đơn vị khác bắt' };
+const XULY_LABEL_VN = { phuong_bat: 'Đã có trong quản lý', sot_lot: 'Sót lọt', don_vi_khac: 'Đơn vị khác bắt', ngoai_dia_ban: 'Ngoài địa bàn' };
 const CAP_KEYWORDS = new Set(['', 'cap', 'cong an phuong', 'phuong', 'congan phuong']);
 
 document.getElementById('btnSubjNewImport').addEventListener('click', () => requireUnlock(() => document.getElementById('subjNewFile').click()));
@@ -3668,8 +3785,8 @@ document.getElementById('subjNewFile').addEventListener('change', async function
         const dv = normKey(donViRaw);
         const isCap = !dv || dv.includes('cap') || dv.includes('cong an phuong') || dv.startsWith('phuong');
         let xuLy = '';
-        if (hoTen) xuLy = !isCap ? 'don_vi_khac' : (timTrungDoiTuongQL(hoTen, khuPhoNoiO, ngaySinh, cccd) ? 'phuong_bat' : 'sot_lot');
         const donViBat = (hoTen && !isCap) ? donViRaw : '';
+        if (hoTen) xuLy = phanLoaiXuLy(hoTen, khuPhoNoiO, ngaySinh, cccd, donViBat);
 
         if (khuPho) touched.add(khuPho + '|' + he);
         stt++;
@@ -3758,8 +3875,9 @@ function updateDedupNote() {
     note.textContent = '✓ Trùng với đối tượng ĐANG QUẢN LÝ (' + escapeHtml(match.hoTen) + (match.ngaySinh ? ', ' + match.ngaySinh : '') + ', ' + displayNameNew(match.khuPho) + ', hệ ' + (HE_LABEL[match.he] || match.he) + ') → KHÔNG tính là sót lọt';
     note.classList.add('matched');
   } else {
-    note.textContent = '⚠️ Không khớp họ tên / năm sinh / CCCD với danh sách đang quản lý → tính là SÓT LỌT (khi đơn vị bắt = CAP)'
-      + (khuPhoNoiO ? '' : ' — lưu ý: chưa chọn "Khu phố ở" nên đối tượng này chưa được cộng vào khu phố nào.');
+    note.textContent = khuPhoNoiO
+      ? '⚠️ Không khớp họ tên / năm sinh / CCCD với danh sách đang quản lý → tính là SÓT LỌT (nếu đơn vị bắt = CAP, Đơn vị khác)'
+      : 'ℹ️ Đối tượng ở NGOÀI ĐỊA BÀN phường (chưa chọn "Khu phố ở") → KHÔNG tính là sót lọt. Nếu thực tế ở phường Tân Bình, hãy chọn Khu phố ở.';
     note.classList.remove('matched');
   }
 }
@@ -3789,7 +3907,7 @@ document.getElementById('btnConfirmAddSubject').addEventListener('click', () => 
   const donVi = document.querySelector('input[name="nf_donvi"]:checked').value;
   const donViBat = donVi === 'khac' ? document.getElementById('nf_donvibat').value.trim() : '';
   if (donVi === 'khac' && !donViBat) { showToast('⚠️ Vui lòng nhập tên đơn vị bắt'); return; }
-  const xuLy = donVi === 'khac' ? 'don_vi_khac' : (timTrungDoiTuongQL(hoTen, khuPhoNoiO, ngaySinh, cccd) ? 'phuong_bat' : 'sot_lot');
+  const xuLy = phanLoaiXuLy(hoTen, khuPhoNoiO, ngaySinh, cccd, donViBat);
   stagedSubjects.push({ hoTen, ngaySinh, cccd, noiO, khuPhoNoiO, xuLy, donViBat });
   renderStagedSubjTable();
   document.getElementById('subjectEntryBox').style.display = 'none';
@@ -3810,7 +3928,7 @@ function renderStagedSubjTable() {
   tbody.innerHTML = stagedSubjects.map((s, i) => `<tr>
     <td>${escapeHtml(s.hoTen)}</td><td>${escapeHtml(fmtNgay(s.ngaySinh))}</td><td>${escapeHtml(s.cccd || '')}</td>
     <td>${s.khuPhoNoiO ? escapeHtml(displayNameNew(s.khuPhoNoiO)) : '(ngoài địa bàn)'}</td>
-    <td>${s.xuLy === 'don_vi_khac' ? escapeHtml(s.donViBat || '') : 'CAP'}</td>
+    <td>${escapeHtml(donViBatOf(s) || 'CAP')}</td>
     <td><button type="button" class="rowbtn danger" data-del-staged="${i}">Xoá</button></td>
   </tr>`).join('') || `<tr><td colspan="6" class="empty-cell">Chưa thêm đối tượng nào — bấm "➕ Thêm đối tượng" bên dưới</td></tr>`;
   tbody.querySelectorAll('[data-del-staged]').forEach(btn => {
@@ -3883,13 +4001,15 @@ function getSubjNewFiltered() {
     if (fHe && s.he !== fHe) return false;
     if (fKp && s.khuPhoNoiO !== fKp) return false;
     if (fTT === '_novu') { if (s.hoTen) return false; }
-    else if (fTT) { if (s.xuLy !== fTT) return false; }
+    else if (fTT) { if (xuLyOf(s) !== fTT) return false; }
     return true;
   });
 }
 function trangThaiBadge(s) {
   if (!s.hoTen) return '<span class="badge-none">Chưa có đối tượng</span>';
-  if (s.xuLy === 'sot_lot') return '<span class="badge-sl">⚠️ Sót lọt</span>';
+  const xl = xuLyOf(s);
+  if (xl === 'sot_lot') return '<span class="badge-sl">⚠️ Sót lọt</span>';
+  if (xl === 'ngoai_dia_ban') return '<span class="badge-ndb">Ngoài địa bàn</span>';
   if (s.xuLy === 'phuong_bat') return '<span class="badge-ok">Đã có trong QL</span>';
   if (s.xuLy === 'don_vi_khac') return '<span class="badge-dvk">Đơn vị khác bắt</span>';
   return '<span class="badge-none">—</span>';
@@ -3899,7 +4019,7 @@ function renderSubjNewTable() {
   const filtered = getSubjNewFiltered();
   // Số liệu hiển thị ĐÃ LỌC TRÙNG: vụ việc theo "Nơi xảy ra + Tên vụ việc", đối tượng theo "Họ và tên".
   const tk = thongKeTheoHe(filtered);
-  const soSotLot = demDoiTuong(filtered.filter(s => s.xuLy === 'sot_lot'));
+  const soSotLot = demDoiTuong(filtered.filter(s => xuLyOf(s) === 'sot_lot'));
   document.getElementById('subjNewSummary').innerHTML =
     '<b>' + tk.vu.total + '</b> vụ việc  •  <b>' + tk.dt.total + '</b> đối tượng'
     + '<span class="sm-he">(Hình sự: ' + tk.vu.hs + ' vụ / ' + tk.dt.hs + ' đt'
@@ -3932,7 +4052,7 @@ function renderSubjNewTable() {
     const v = g[0];                       // thông tin vụ việc lấy từ dòng đầu của nhóm
     const n = g.length;
     g.forEach((s, ri) => {
-      const rowCls = [ri === 0 ? 'vu-first' : '', !s.hoTen ? 'row-novu' : (s.xuLy === 'sot_lot' ? 'row-sotlot' : '')].filter(Boolean).join(' ');
+      const rowCls = [ri === 0 ? 'vu-first' : '', !s.hoTen ? 'row-novu' : (xuLyOf(s) === 'sot_lot' ? 'row-sotlot' : '')].filter(Boolean).join(' ');
       html += '<tr class="' + rowCls + '">';
       if (ri === 0) {
         html += `<td class="vu-cell vu-stt nowrap" rowspan="${n}">${sttVu}</td>
@@ -3947,7 +4067,7 @@ function renderSubjNewTable() {
     <td>${escapeHtml(s.noiO || '')}</td>
     <td class="nowrap">${s.khuPhoNoiO ? escapeHtml(displayNameNew(s.khuPhoNoiO)) : '<em>(ngoài địa bàn)</em>'}</td>
     <td class="nowrap">${HE_LABEL[s.he] || s.he}</td>
-    <td class="nowrap">${s.xuLy === 'don_vi_khac' ? escapeHtml(s.donViBat || '') : (s.hoTen ? 'CAP' : '')}</td>
+    <td class="nowrap">${s.hoTen ? escapeHtml(donViBatOf(s) || 'CAP') : ''}</td>
     <td class="nowrap">${trangThaiBadge(s)}</td>
     <td class="actioncell"><button class="rowbtn edit" data-edit-new="${s._id}">Sửa</button><button class="rowbtn danger" data-del-new="${s._id}">Xoá</button></td>
   </tr>`;
@@ -4029,8 +4149,8 @@ async function xuatExcelDanhSach(rows, tenFile, tieuDe) {
     khuPho: s.khuPho ? displayNameNew(s.khuPho) : '', he: HE_LABEL[s.he] || s.he,
     hoTen: s.hoTen || '', ngaySinh: fmtNgay(s.ngaySinh), cccd: s.cccd || '',
     noiO: s.noiO || '', khuPhoNoiO: s.khuPhoNoiO ? displayNameNew(s.khuPhoNoiO) : '',
-    donViBat: s.xuLy === 'don_vi_khac' ? (s.donViBat || '') : (s.hoTen ? 'CAP' : ''),
-    trangThai: s.hoTen ? (XULY_LABEL_VN[s.xuLy] || s.xuLy) : 'Chưa có đối tượng',
+    donViBat: s.hoTen ? (donViBatOf(s) || 'CAP') : '',
+    trangThai: s.hoTen ? (XULY_LABEL_VN[xuLyOf(s)] || xuLyOf(s)) : 'Chưa có đối tượng',
   }));
   ws.getRow(1).font = { bold: true };
   const tk = thongKeTheoHe(rows);
@@ -4052,7 +4172,7 @@ async function xuatExcelDanhSach(rows, tenFile, tieuDe) {
   showToast('✅ Đã xuất ' + rows.length + ' dòng');
 }
 document.getElementById('btnSubjNewExportSotLot').addEventListener('click', () => {
-  xuatExcelDanhSach(loadSubjNew().filter(s => s.hoTen && s.xuLy === 'sot_lot'), 'DanhSachSotLot', 'DANH SÁCH ĐỐI TƯỢNG SÓT LỌT');
+  xuatExcelDanhSach(loadSubjNew().filter(s => s.hoTen && xuLyOf(s) === 'sot_lot'), 'DanhSachSotLot', 'DANH SÁCH ĐỐI TƯỢNG SÓT LỌT');
 });
 document.getElementById('btnSubjNewExportView').addEventListener('click', () => {
   xuatExcelDanhSach(getSubjNewFiltered(), 'DanhSachVuViec_DaLoc', 'DANH SÁCH ĐANG LỌC');
